@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "font";
+    src: url('./fonts/LuckiestGuy-Regular.ttf');
+}
+
+#start-screen, #end-screen {
+    font-family: "font";
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 24px;
+    gap: 20px;
+}
+
+#end-screen {
+    font-family: "font";
+    display: none;
+}
+
+button { 
+    font-family: "font";
+    margin-top: 16px;
+    padding: 20px 32px;
+    font-size:18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    transition: all 0.2s;
+}
+button:hover {
+    font-family: "font";
+    background: white;
+    color: black;
+}

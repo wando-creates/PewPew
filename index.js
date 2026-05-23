@@ -2,6 +2,24 @@ const canvas = document.
     querySelector('canvas');
 const c = canvas.getContext('2d')
 
+// screen state variables 
+const startScreen = document.getElementById('start-screen')
+const endScreen = document.getElementById('end-screen')
+const startBtn = document.getElementById('start-btn')
+const restartBtn = document.getElementById('restart-btn')
+const finalScoreEl = document.getElementById('final-score')
+
+// start->play state
+startBtn.addEventListener('click', () => {
+    startScreen.style.display = "none"
+    startGame()
+})
+
+// Play again 
+restartBtn.addEventListener("click", () => {
+    endScreen.style.display = "none"
+    startGame()
+})
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -103,12 +121,13 @@ const x = canvas.width/2
 const y = canvas.height/2
 
 const player = new Player(x,y, 15, "white")
-const projectiles = []
-const enemies = []
-const particles = []
+let score = 0
+let projectiles = []
+let enemies = []
+let particles = []
 
 function spawnEnemies() {
-    setInterval(() => {
+    spawnInterval = setInterval(() => {
         const radius = Math.random() * (60 - 15) + 15
 
         let x
@@ -171,7 +190,7 @@ function animate() {
 
         if (dist - enemy.radius - player.radius < 1)
         {
-            cancelAnimationFrame(animationID)
+            gameOver()
         }
 
         projectiles.forEach((projectile, projectileIndex) => {
@@ -206,6 +225,26 @@ function animate() {
             }
         })
     })
+}
+
+function startGame() {
+    //reset
+    score = 0
+    projectiles = []
+    enemies = []
+    particles = []
+
+    animate()
+    spawnEnemies()
+}
+
+function gameOver() {
+    cancelAnimationFrame(animationID)
+    clearInterval(spawnInterval)
+
+    // end screen
+    finalScoreEl.textContent = score
+    endScreen.style.display = "flex"
 }
 
 addEventListener('click', (event) => 
