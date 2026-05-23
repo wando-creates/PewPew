@@ -11,12 +11,14 @@ const finalScoreEl = document.getElementById('final-score')
 
 // start->play state
 startBtn.addEventListener('click', () => {
+    stateSound.play()
     startScreen.style.display = "none"
     startGame()
 })
 
 // Play again 
 restartBtn.addEventListener("click", () => {
+    stateSound.play()
     endScreen.style.display = "none"
     startGame()
 })
@@ -120,6 +122,10 @@ class Particle{
 const x = canvas.width/2
 const y = canvas.height/2
 
+const shootSound = new Audio('./sounds/upgrade.mp3')
+const damageSound = new Audio('./sounds/laser.mp3')
+const stateSound = new Audio('./sounds/state_change.mp3')
+
 const player = new Player(x,y, 15, "white")
 let score = 0
 let projectiles = []
@@ -198,6 +204,7 @@ function animate() {
 
             if (dist - enemy.radius - projectile.radius < 1)
             {
+                damageSound
                 for (let i=0; i < enemy.radius; i++) {
                     particles.push(new Particle(
                         projectile.x, 
@@ -249,6 +256,8 @@ function gameOver() {
 
 addEventListener('click', (event) => 
     {
+    damageSound.currentTime = 0
+    damageSound.play()
     const angle = Math.atan2(
         event.clientY -canvas.height/2,
         event.clientX-canvas.width/2)
