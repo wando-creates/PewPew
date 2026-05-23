@@ -125,6 +125,9 @@ const y = canvas.height/2
 const shootSound = new Audio('./sounds/upgrade.mp3')
 const damageSound = new Audio('./sounds/laser.mp3')
 const stateSound = new Audio('./sounds/state_change.mp3')
+const hitSound = new Audio('./sounds/popping.mp3')
+
+const scoreEl = document.getElementById("score")
 
 const player = new Player(x,y, 15, "white")
 let score = 0
@@ -204,7 +207,8 @@ function animate() {
 
             if (dist - enemy.radius - projectile.radius < 1)
             {
-                damageSound
+                hitSound.cloneNode().play()
+                
                 for (let i=0; i < enemy.radius; i++) {
                     particles.push(new Particle(
                         projectile.x, 
@@ -217,11 +221,15 @@ function animate() {
                 }
 
                 if (enemy.radius - 15 > 15) {
+                    score += 10
+                    scoreEl.textContent = score
                     enemy.radius -= 15
                     setTimeout(() => {
                         projectiles.splice(projectileIndex, 1)
                     }, 0)
                 } else {
+                    score += 50
+                    scoreEl.textContent = score
                     setTimeout(() => {
                         enemies.splice(index, 1)
                         projectiles.splice(projectileIndex, 1)
@@ -237,6 +245,7 @@ function animate() {
 function startGame() {
     //reset
     score = 0
+    scoreEl.textContent = 0
     projectiles = []
     enemies = []
     particles = []
@@ -256,8 +265,6 @@ function gameOver() {
 
 addEventListener('click', (event) => 
     {
-    damageSound.currentTime = 0
-    damageSound.play()
     const angle = Math.atan2(
         event.clientY -canvas.height/2,
         event.clientX-canvas.width/2)

@@ -2,6 +2,17 @@
     font-family: "font";
     src: url('./fonts/LuckiestGuy-Regular.ttf');
 }
+#score {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: rgb(62, 60, 60, 0.5);
+    color: white;
+    font-family: "font";
+    font-size: 32px;
+    border: 2px solid rgb(45, 42, 42);
+    padding: 30px;
+}
 
 #start-screen, #end-screen {
     font-family: "font";
